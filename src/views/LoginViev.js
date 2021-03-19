@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-//import React, { useState } from 'react';
-import { connect} from 'react-redux';
+import React, {useState } from 'react';
 import { authOperations } from '../redux/auth';
+import { useDispatch } from 'react-redux';
 
 const styles = {
   form: {
@@ -14,10 +13,11 @@ const styles = {
   },
 };
 
-/*export default function LoginView ({onLogin}) {
+export default function LoginView () {
 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const dispatch = useDispatch();
 
 const handleChange = evt => {
   const{ name, value } = evt.target;
@@ -39,7 +39,7 @@ const handleChange = evt => {
 const handleSubmit = e => {
   e.preventDefault();
 
-  onLogin(setEmail, setPassword);
+  dispatch(authOperations.logIn({email, password})); 
 
   setEmail({ email: '' });
   setPassword({ password: '' });
@@ -78,8 +78,9 @@ const handleSubmit = e => {
     </form>
   </div> 
   )
-}*/
+}
 
+/*
 class LoginView extends Component {
   state = {
     email: '',
@@ -142,3 +143,4 @@ const mapDispathToProps = {
 }
 
 export default connect(null, mapDispathToProps)(LoginView);
+*/

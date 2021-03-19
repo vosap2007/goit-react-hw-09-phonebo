@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import contactsOperations  from '../redux/contacts/contacts-operations';
 import Filter from '../components/Filter';
@@ -9,35 +9,29 @@ import Alert from '../components/Alert';
 import styles from '../css/PhoneBook.module.css';
 import '../css/animation.css';
 
-class ContactsViev extends Component {
-   state = {
-    showTitle: false,
-   error: false,
-  }
+export default function ContactsViev () {
+  const [showTitle, setShowTitle] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
 
-  updateData = (value) => {
-    this.setState({ error: value })
+  useEffect (() => {
+    dispatch(contactsOperations.fetchContacts());
+  },[dispatch])
+
+  const updateData = (value) => {
+    setError(value);
 
     setTimeout(() => {
-      this.setState(() => {
-        return {
-          error: false
-        };
-      });
+      setError(false)
     }, 3000);
   };
 
-  componentDidMount() {
-    this.props.fetchContacts();
-  };
-
-  render() {
   return (
     <>
       <div className={styles.box}>
 
 <CSSTransition
-  in={this.state.error}
+  in={error}
   appear={true}
   classNames='error'
   timeout={250}
@@ -54,7 +48,7 @@ class ContactsViev extends Component {
   <h1 className={styles.phonebook}>Phonebook</h1>
 </CSSTransition>
 
-<Input updateData={this.updateData} />
+<Input updateData={updateData} />
 <h2 className={styles.title}>Contacts</h2>
 
 <CSSTransition
@@ -76,11 +70,4 @@ class ContactsViev extends Component {
 </div>
     </>
   );
-}
 };
-
-const mapDispatchToProps = {
-  fetchContacts: contactsOperations.fetchContacts,
-};
-
-export default connect(null, mapDispatchToProps)(ContactsViev);

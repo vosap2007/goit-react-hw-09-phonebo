@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector, useDispatch } from 'react-redux';
 import contactsOperations from "../redux/contacts/contacts-operations";
@@ -9,13 +9,10 @@ import {Button} from "react-bootstrap";
 export default function Contacts () {
 const contacts = useSelector(contactsSelectors.getVisibleContacts);
 const dispatch = useDispatch();
-
-const deleteContacts = useCallback (() => {dispatch(contactsOperations.deleteContacts());
-}, [dispatch]); 
-
+//const deleteContacts = dispatch(contactsOperations.deleteContacts(contact.id));
 
 return (
-
+  
     <TransitionGroup component='ul'>
         {contacts.map(contact =>
         <CSSTransition 
@@ -27,7 +24,7 @@ return (
             <section className={styles.gid}>
         <Button 
         type="button" 
-        onClick={() => deleteContacts(contact.id)}
+        onClick={() => dispatch(contactsOperations.deleteContacts(contact.id))}
         variant="primary">Delete
         </Button>
             </section>

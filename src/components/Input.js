@@ -32,8 +32,7 @@ const handleSubmit = e => {
   } 
 
   if ((name||number)!== '') {
-   onAddContact(setName);
-   onAddContact(setNumber);
+   onAddContact({name, number});
    setName('');
    setNumber(''); 
    
