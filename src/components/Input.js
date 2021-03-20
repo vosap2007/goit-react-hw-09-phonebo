@@ -4,8 +4,9 @@ import contactsOperations from "../redux/contacts/contacts-operations";
 import styles from '../css/PhoneBook.module.css';
 import contactsSelectors from "../redux/contacts/contacts-selectors";
 import {Button} from "react-bootstrap";
+import PropTypes from 'prop-types';
 
-export default function Input ({updateData}) {
+function Input ({updateData}) {
 const [name, setName] = useState('');
 const [number, setNumber] = useState('');
 const [error, setError] = useState(true);
@@ -27,6 +28,7 @@ const handleSubmit = e => {
 
   if (contacts.some(item => name === item.name)) {
       updateData(error);
+      
 
     return;
   } 
@@ -68,3 +70,9 @@ const handleSubmit = e => {
       </div>
   );
 };
+
+Input.propTypes = {
+  updateData: PropTypes.func.isRequired
+};
+
+export default Input;
